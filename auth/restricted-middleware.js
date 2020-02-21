@@ -5,19 +5,18 @@ module.exports = (req, res, next) => {
 
     const token = req.headers.authorization;
     if (req.decodedJwt) {
-      next();
+        next();
     } else if (token) {
-      jwt.verify(token, secrets.jwtSecret, (err, decodedJwt) => {
-        if (err) {
-          res.status(401).json({ you: "shall not pass!" });
-        } else {
-          req.decodedJwt = decodedJwt;
-          next();
-        }
-      })
+        jwt.verify(token, secrets.jwtSecret, (err, decodedJwt) => {
+            if (err) {
+                res.status(401).json({ you: "shall not pass!" });
+            } else {
+                req.decodedJwt = decodedJwt;
+                next();
+            }
+        })
     } else {
-      res.status(401).json({ you: "can't touch that." });
+        res.status(401).json({ you: "can't touch that." });
     }
 
-  };
-  
+};
